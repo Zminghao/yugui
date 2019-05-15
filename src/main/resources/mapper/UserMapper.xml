@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.group8.yugui.persistance.UserMapper">
+
+    <cache />
+
+    <select id="getUserByIdAndPassword" parameterType="com.group8.yugui.domain.User" resultType="com.group8.yugui.domain.User">
+        SELECT
+        `user`.USERID,
+        `user`.NAME,
+        `user`.SEX,
+        `user`.PLACE,
+        `user`.AGE,
+        `user`.PHONE,
+        `user`.description
+        FROM `user`,`signon`
+        WHERE `signon`.USERID = #{userID}
+        AND `signon`.PASSWORD = #{password}
+        AND `user`.USERID = `signon`.USERID
+    </select>
+
+    <select id="getUserById" parameterType="java.lang.String" resultType="com.group8.yugui.domain.User">
+        SELECT
+        `user`.USERID,
+        `user`.NAME,
+        `user`.SEX,
+        `user`.PLACE,
+        `user`.AGE,
+        `user`.PHONE,
+        `user`.description
+        FROM `user`
+        WHERE `user`.USERID = #{userID};
+    </select>
+
+    <select id="passwordOr" parameterType="com.group8.yugui.domain.User" resultType="java.lang.String">
+        SELECT
+          `signon`.password
+        FROM
+          `signon`
+        WHERE `signon`.userID = #{userID}
+    </select>
+
+    <select id="existOr" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT
+          `signon`.userID
+        FROM `signon`
+        WHERE `signon`.userID = #{userID}
+    </select>
+    
+    <update id="updateUser" parameterType="com.group8.yugui.domain.User">
+        UPDATE `user` SET
+        `user`.name = #{name},
+        `user`.phone = #{phone},
+        `user`.sex = #{sex},
+        `user`.age = #{age},
+        `user`.place = #{address},
+        `user`.description = #{description}
+        WHERE `user`.userID = #{userID}
+    </update>
+
+    <insert id="insertUser" parameterType="com.group8.yugui.persistance.UserMapper">
+        INSERT INTO `user` 
+          (`user`.userID)
+        VALUES 
+          (#{userID})
+    </insert>
+
+    <update id="updateSignon" parameterType="com.group8.yugui.persistance.UserMapper">
+        UPDATE `signon` SET
+          `signon`.PASSWORD = #{password}
+        WHERE `signon`.USERID = #{userID}
+    </update>
+    
+    <insert id="insertSignon" parameterType="com.group8.yugui.persistance.UserMapper">
+        INSERT INTO `signon` 
+          (`signon`.USERID, `signon`.PASSWORD)
+        VALUES
+          (#{userID}, #{password})
+    </insert>
+    
+</mapper>

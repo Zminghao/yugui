@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.group8.yugui.persistance.CategoryMapper">
+    <cache />
+
+    <select id="getDetail" parameterType="java.lang.Integer" resultType="com.group8.yugui.domain.Detail">
+        SELECT
+          `category`.name,
+          `category`.detail
+        FROM `category`
+        WHERE `category`.merchandiseID = #{merchandiseID}
+    </select>
+
+    <select id="getCarList" resultType="com.group8.yugui.domain.Car">
+        SELECT
+          `category`.merchandiseID,
+          `category`.category,
+          `category`.price,
+          `category`.picture,
+          `category`.introduce,
+          `category`.name,
+          `car`.type,
+          `car`.usernum
+        FROM `category`,`car`
+        WHERE `category`.category = "car"
+        AND `category`.merchandiseID = `car`.merchandiseID
+    </select>
+
+    <select id="getCarListByType" parameterType="java.lang.String" resultType="com.group8.yugui.domain.Car">
+        SELECT
+          `category`.merchandiseID,
+          `category`.category,
+          `category`.price,
+          `category`.picture,
+          `category`.introduce,
+          `category`.name,
+          `car`.type,
+          `car`.usernum
+        FROM `category`,`car`
+        WHERE `car`.type = #{type}
+        AND `car`.merchandiseID = `category`.merchandiseID
+    </select>
+
+    <select id="getCarListByPrice" parameterType="com.group8.yugui.data.PriceModel" resultType="com.group8.yugui.domain.Car">
+        SELECT
+          `category`.merchandiseID,
+          `category`.category,
+          `category`.price,
+          `category`.picture,
+          `category`.introduce,
+          `category`.name,
+          `car`.type,
+          `car`.usernum
+        FROM `category`,`car`
+        WHERE `category`.category = "car"
+        AND `category`.price &gt; #{pricelow}
+        AND `category`.price &lt; #{pricehigh}
+        AND `category`.merchandiseID = `car`.merchandiseID
+    </select>
+
+    <select id="getCarByName" parameterType="java.lang.String" resultType="com.group8.yugui.domain.Car">
+        SELECT
+          `category`.merchandiseID,
+          `category`.category,
+          `category`.price,
+          `category`.picture,
+          `category`.introduce,
+          `category`.name,
+          `car`.type,
+          `car`.usernum
+        FROM `category`,`car`
+        WHERE `category`.name = #{name}
+        AND `category`.merchandiseID = `car`.merchandiseID
+    </select>
+
+    <select id="getCar" parameterType="java.lang.Integer" resultType="com.group8.yugui.domain.Car">
+        SELECT
+          `category`.merchandiseID,
+          `category`.category,
+          `category`.price,
+          `category`.picture,
+          `category`.detail,
+          `category`.introduce,
+          `category`.name,
+          `car`.type,
+          `car`.merchantID,
+          `car`.merchant,
+          `car`.usernum
+        FROM `category`,`car`
+        WHERE `category`.merchandiseID = #{merchandiseID}
+        AND `car`.merchandiseID = #{merchandiseID}
+    </select>
+
+    <select id="getClothingList" resultType="com.group8.yugui.domain.Clothing">
+        SELECT
+          `category`.merchandiseID,
+          `category`.category,
+          `category`.price,
+          `category`.picture,
+          `category`.detail,
+          `category`.introduce,
+          `category`.name,
+          `clothing`.merchantID,
+          `clothing`.merchant,
+          `clothing`.usernum,
+          `clothing`.sex,
+          `clothing`.type,
+          `clothing`.style
+        FROM `category`,`clothing`
+        WHERE `category`.category = "clothing"
+        AND `category`.merchandiseID = `clothing`.merchandiseID
+    </select>
+
+    <select id="getClothingListBySex" parameterType="java.lang.String" resultType="com.group8.yugui.domain.Clothing">
+        SELECT
+          `category`.merchandiseID,
+          `category`.category,
+          `category`.price,
+          `category`.picture,
+          `category`.detail,
+          `category`.introduce,
+          `category`.name,
+          `clothing`.merchantID,
+          `clothing`.merchant,
+          `clothing`.usernum,
+          `clothing`.sex,
+          `clothing`.type,
+          `clothing`.style
+        FROM `category`,`clothing`
+        WHERE `clothing`.sex = #{sex}
+        AND `clothing`.merchandiseID = `category`.merchandiseID
+    </select>
+
+    <select id="getClothingListByType" parameterType="java.lang.String" resultType="com.group8.yugui.domain.Clothing">
+        SELECT
+          `category`.merchandiseID,
+          `category`.category,
+          `category`.price,
+          `category`.picture,
+          `category`.detail,
+          `category`.introduce,
+          `category`.name,
+          `clothing`.merchantID,
+          `clothing`.merchant,
+          `clothing`.usernum,
+          `clothing`.sex,
+          `clothing`.type,
+          `clothing`.style
+        FROM `category`,`clothing`
+        WHERE `clothing`.type = #{type}
+        AND `clothing`.merchandiseID = `category`.merchandiseID
+    </select>
+
+    <select id="getClothingListByStyle" parameterType="java.lang.String" resultType="com.group8.yugui.domain.Clothing">
+        SELECT
+          `category`.merchandiseID,
+          `category`.category,
+          `category`.price,
+          `category`.picture,
+          `category`.detail,
+          `category`.introduce,
+          `category`.name,
+          `clothing`.merchantID,
+          `clothing`.merchant,
+          `clothing`.usernum,
+          `clothing`.sex,
+          `clothing`.type,
+          `clothing`.style
+        FROM `category`,`clothing`
+        WHERE `clothing`.style = #{style}
+        AND `clothing`.merchandiseID = `category`.merchandiseID
+    </select>
+
+    <select id="getClothingByName" parameterType="java.lang.String" resultType="com.group8.yugui.domain.Clothing">
+        SELECT
+          `category`.merchandiseID,
+          `category`.category,
+          `category`.price,
+          `category`.picture,
+          `category`.detail,
+          `category`.introduce,
+          `category`.name,
+          `clothing`.merchantID,
+          `clothing`.merchant,
+          `clothing`.usernum,
+          `clothing`.sex,
+          `clothing`.type,
+          `clothing`.style
+        FROM `category`,`clothing`
+        WHERE `category`.name = #{name}
+        AND `category`.merchandiseID = `clothing`.merchandiseID
+    </select>
+
+    <select id="getClothing" parameterType="java.lang.Integer" resultType="com.group8.yugui.domain.Clothing">
+        SELECT
+          `category`.merchandiseID,
+          `category`.category,
+          `category`.price,
+          `category`.picture,
+          `category`.detail,
+          `category`.introduce,
+          `category`.name,
+          `clothing`.merchantID,
+          `clothing`.merchant,
+          `clothing`.usernum,
+          `clothing`.newpicture
+        FROM `category`,`clothing`
+        WHERE `category`.merchandiseID = #{merchandiseID}
+        AND `clothing`.merchandiseID = #{merchandiseID}
+    </select>
+
+    <select id="getHotelList" resultType="com.group8.yugui.domain.Hotel">
+        SELECT
+          `category`.merchandiseID,
+          `category`.category,
+          `category`.price,
+          `category`.picture,
+          `category`.detail,
+          `category`.introduce,
+          `category`.name,
+          `hotel`.merchantID,
+          `hotel`.merchant,
+          `hotel`.tablenumber,
+          `hotel`.rank,
+          `hotel`.usernum
+        FROM `category`,`hotel`
+        WHERE `category`.category = "hotel"
+        AND `hotel`.merchandiseID = `category`.merchandiseID
+    </select>
+
+    <select id="getHotelListByRank" parameterType="java.lang.Integer" resultType="com.group8.yugui.domain.Hotel">
+        SELECT
+          `category`.merchandiseID,
+          `category`.category,
+          `category`.price,
+          `category`.picture,
+          `category`.detail,
+          `category`.introduce,
+          `category`.name,
+          `hotel`.merchantID,
+          `hotel`.merchant,
+          `hotel`.tablenumber,
+          `hotel`.rank,
+          `hotel`.usernum
+        FROM `category`,`hotel`
+        WHERE `hotel`.rank = #{rank}
+        AND `hotel`.merchandiseID = `category`.merchandiseID
+    </select>
+
+    <select id="getHotelListByPrice" parameterType="com.group8.yugui.data.PriceModel" resultType="com.group8.yugui.domain.Hotel">
+        SELECT
+          `category`.merchandiseID,
+          `category`.category,
+          `category`.price,
+          `category`.picture,
+          `category`.detail,
+          `category`.introduce,
+          `category`.name,
+          `hotel`.merchantID,
+          `hotel`.merchant,
+          `hotel`.tablenumber,
+          `hotel`.rank,
+          `hotel`.usernum
+        FROM `category`,`hotel`
+        WHERE `category`.category = "hotel"
+        AND `category`.price &gt; #{pricelow}
+        AND `category`.price &lt; #{pricehigh}
+        AND `hotel`.merchandiseID = `category`.merchandiseID
+    </select>
+
+    <select id="getHotelListByTable" parameterType="com.group8.yugui.data.TableModel" resultType="com.group8.yugui.domain.Hotel">
+        SELECT
+          `category`.merchandiseID,
+          `category`.category,
+          `category`.price,
+          `category`.picture,
+          `category`.detail,
+          `category`.introduce,
+          `category`.name,
+          `hotel`.merchantID,
+          `hotel`.merchant,
+          `hotel`.tablenumber,
+          `hotel`.rank,
+          `hotel`.usernum
+        FROM `category`,`hotel`
+        WHERE `category`.category = "hotel"
+        AND `hotel`.merchandiseID = `category`.merchandiseID
+        AND `hotel`.tablenumber &gt; #{tablelow}
+        AND `hotel`.tablenumber &lt; #{tablehigh}
+    </select>
+
+    <select id="getHotelByName" parameterType="java.lang.String" resultType="com.group8.yugui.domain.Hotel">
+        SELECT
+          `category`.merchandiseID,
+          `category`.category,
+          `category`.price,
+          `category`.picture,
+          `category`.detail,
+          `category`.introduce,
+          `category`.name,
+          `hotel`.merchantID,
+          `hotel`.merchant,
+          `hotel`.tablenumber,
+          `hotel`.rank,
+          `hotel`.usernum
+        FROM `category`,`hotel`
+        WHERE `category`.name = #{name}
+        AND `category`.category = "hoel"
+        AND `hotel`.merchandiseID = `category`.merchandiseID
+    </select>
+
+    <select id="getHotel" parameterType="java.lang.Integer" resultType="com.group8.yugui.domain.Hotel">
+        SELECT
+          `category`.merchandiseID,
+          `category`.category,
+          `category`.price,
+          `category`.picture,
+          `category`.detail,
+          `category`.introduce,
+          `category`.name,
+          `hotel`.merchantID,
+          `hotel`.merchant,
+          `hotel`.tablenumber,
+          `hotel`.rank,
+          `hotel`.usernum
+        FROM `category`,`hotel`
+        WHERE `category`.category = "hotel"
+        AND `category`.merchandiseID = #{merchandiseID}
+        AND `hotel`.merchandiseID = #{merchandiseID}
+    </select>
+
+    <select id="getPersonList" parameterType="com.group8.yugui.domain.Person" resultType="com.group8.yugui.domain.Person">
+        SELECT
+          `category`.merchandiseID,
+          `category`.category,
+          `category`.price,
+          `category`.picture,
+          `category`.detail,
+          `category`.introduce,
+          `category`.name,
+          `person`.job,
+          `person`.phone
+        FROM `category`,`person`
+        WHERE `category`.category = `person`
+        AND `category`.merchandiseID = #{merchandiseID}
+        AND `person`.merchandiseID = #{merchandiseID}
+    </select>
+
+    <select id="getPerson" parameterType="java.lang.Integer" resultType="com.group8.yugui.domain.Person">
+        SELECT
+          `category`.merchandiseID,
+          `category`.category,
+          `category`.price,
+          `category`.picture,
+          `category`.detail,
+          `category`.introduce,
+          `category`.name,
+          `person`.job,
+          `person`.phone
+        FROM `category`,`person`
+        WHERE `category`.merchandiseID = #{merchandiseID}
+        AND `person`.merchandiseID = #{merchandiseID}
+    </select>
+
+</mapper>
